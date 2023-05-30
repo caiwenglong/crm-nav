@@ -7,6 +7,13 @@ export function getWebsiteList() {
   })
 }
 
+export function getWebsiteCategory() {
+  return $http({
+    method: 'GET',
+    url: '/website/category/all',
+  })
+}
+
 export default {
   getWebsiteList,
 }

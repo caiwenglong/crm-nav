@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getWebsiteList } from '~/api/apiWebsite'
+import { getWebsiteCategory, getWebsiteList } from '~/api/apiWebsite'
 
 export const useWebsiteStore = defineStore('websiteStore', {
   state: () => {
@@ -7,11 +7,16 @@ export const useWebsiteStore = defineStore('websiteStore', {
       code: 0,
       massage: '',
       websiteList: Array,
+      websiteCategories: [],
     }
   },
   actions: {
     async aGetWebsiteList() {
       return await getWebsiteList()
+    },
+    async getWebsiteCategory() {
+      const categoryList = await getWebsiteCategory()
+      this.websiteCategories = categoryList.data ? categoryList.data : []
     },
   },
 })

@@ -10,6 +10,14 @@ interface Website {
   id: number
 }
 
+interface WebsiteCategory {
+  id: string
+  name: string
+  parentID: string
+  createdAt: string
+  updatedAt: string
+}
+
 interface Grouped {
   [key: string]: Website[] // 以string类型为键，并且值为Person数组类型的对象
 }
@@ -29,4 +37,5 @@ export type {
   Website,
   Grouped,
   WebsiteList,
+  WebsiteCategory,
 }

@@ -1,23 +1,29 @@
 <script lang="ts">
 import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  TagsOutlined,
 } from '@ant-design/icons-vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { useWebsiteStore } from '~/stores/storeWebsite'
+import type { WebsiteCategory } from '~/type/website'
 
+const websiteStore = useWebsiteStore()
+const categoryList = reactive<WebsiteCategory[]>([])
 export default defineComponent({
   components: {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    // MenuUnfoldOutlined,
-    // MenuFoldOutlined,
+    TagsOutlined,
   },
   setup() {
+    onMounted(async () => {
+      await websiteStore.getWebsiteCategory()
+      websiteStore.websiteCategories.forEach((item) => {
+        categoryList.push(item)
+      })
+    })
+
     return {
       selectedKeys: ref<string[]>(['1']),
       collapsed: ref<boolean>(false),
+      categoryList,
     }
   },
 
@@ -29,17 +35,9 @@ export default defineComponent({
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
       <div class="logo" />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item key="1">
-          <UserOutlined />
-          <span>nav 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <VideoCameraOutlined />
-          <span>nav 2</span>
-        </a-menu-item>
-        <a-menu-item key="3">
-          <UploadOutlined />
-          <span>nav 3</span>
+        <a-menu-item v-for="category in categoryList" :key="category.id">
+          <TagsOutlined />
+          <span>{{ category.name }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
