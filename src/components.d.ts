@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    AButton: typeof import('ant-design-vue/es')['Button']
     ACard: typeof import('ant-design-vue/es')['Card']
     ACardMeta: typeof import('ant-design-vue/es')['CardMeta']
     ALayout: typeof import('ant-design-vue/es')['Layout']
@@ -21,6 +22,7 @@ declare module '@vue/runtime-core' {
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     AntMenu: typeof import('./components/AntMenu.vue')['default']
     ASpin: typeof import('ant-design-vue/es')['Spin']
+    ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
     BaseVirtualList: typeof import('./components/base-virtual-list/src/base-virtual-list.vue')['default']
     BaseVirtualObserver: typeof import('./components/base-virtual-list/src/base-virtual-observer.vue')['default']

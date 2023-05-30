@@ -9,6 +9,10 @@ defineProps({
     type: Object as () => Website[],
   },
 })
+
+function handleGoWebsite(url: string): void {
+  window.open(url)
+}
 </script>
 
 <template>
@@ -28,12 +32,19 @@ defineProps({
                 <EditOutlined key="edit" />
                 <EllipsisOutlined key="ellipsis" />
               </template>
-              <a-card-meta :title="item.websiteName">
+              <a-card-meta>
+                <template #title>
+                  <div @click="handleGoWebsite(item.websiteLink)">
+                    {{ item.websiteName }}
+                  </div>
+                </template>
                 <template #avatar>
                   <a-avatar src="https://joeschmoe.io/api/v1/random" />
                 </template>
                 <template #description>
-                  {{ item.introduction }}
+                  <a-tooltip placement="topLeft" :title="item.introduction">
+                    {{ item.introduction }}
+                  </a-tooltip>
                 </template>
               </a-card-meta>
               <!-- {{ item.introduction }} -->
