@@ -1,29 +1,10 @@
 <script lang="ts">
-import {
-  TagsOutlined,
-} from '@ant-design/icons-vue'
-import { defineComponent, onMounted, ref } from 'vue'
-import { useWebsiteStore } from '~/stores/storeWebsite'
-import type { WebsiteCategory } from '~/type/website'
+import { defineComponent, ref } from 'vue'
 
-const websiteStore = useWebsiteStore()
-const categoryList = reactive<WebsiteCategory[]>([])
 export default defineComponent({
-  components: {
-    TagsOutlined,
-  },
   setup() {
-    onMounted(async () => {
-      await websiteStore.getWebsiteCategory()
-      websiteStore.websiteCategories.forEach((item) => {
-        categoryList.push(item)
-      })
-    })
-
     return {
-      selectedKeys: ref<string[]>(['1']),
       collapsed: ref<boolean>(false),
-      categoryList,
     }
   },
 
@@ -32,14 +13,9 @@ export default defineComponent({
 
 <template>
   <a-layout class="h-full">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible :style="{ overflow: 'auto', height: '100vh' }">
       <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item v-for="category in categoryList" :key="category.id">
-          <TagsOutlined />
-          <span>{{ category.name }}</span>
-        </a-menu-item>
-      </a-menu>
+      <SiderMenu />
     </a-layout-sider>
     <a-layout>
       <!-- <a-layout-header style="background: #fff; padding: 0">
