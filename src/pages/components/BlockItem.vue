@@ -3,7 +3,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/ico
 import type { Website } from '~/type/website'
 
 defineProps({
-  id: Number,
+  id: String,
   category: String,
   source: {
     type: Object as () => Website[],
@@ -18,7 +18,7 @@ function handleGoWebsite(url: string): void {
 <template>
   <div class="grid-wrapper">
     <div class="block-header">
-      <a-typography-title :level="4" type="success">
+      <a-typography-title :id="id" :level="4" type="success">
         {{ category }}
       </a-typography-title>
     </div>

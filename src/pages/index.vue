@@ -21,7 +21,7 @@ async function handleGetWebsiteList() {
     forIn(group, (value: Array<Website>, key: string) => {
       websiteList.push(
         reactive({
-          id: 1,
+          id: value[0].categoryID,
           category: key,
           websites: value as Website[],
         }),

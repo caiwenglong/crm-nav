@@ -1,5 +1,6 @@
 interface Website {
   category: string
+  categoryID: string
   createdAt: string
   details: string
   introduction: string
@@ -28,7 +29,7 @@ interface WebsiteDict {
 }
 
 interface WebsiteList {
-  id: number
+  id: string
   category: string
   websites: Website[]
 }
