@@ -1,25 +1,18 @@
 <script setup lang="ts">
 import { forIn, groupBy } from 'lodash'
 import { onMounted } from 'vue'
-import BlockItem from './components/BlockItem.vue'
+import BlockItem from '../components/BlockItem.vue'
 import { useWebsiteStore } from '~/stores/storeWebsite'
 import type { Website, WebsiteList } from '~/type/website'
 
-defineOptions({
-  name: 'IndexPage',
-})
 const spinning = ref(false)
 const website = useWebsiteStore()
-const targetOffset = ref<number | undefined>(undefined)
-
-targetOffset.value = window.innerHeight / 2
 
 const websiteList = reactive<WebsiteList[]>([])
 async function handleGetWebsiteList() {
   spinning.value = true
   const result = await website.aGetWebsiteList()
   const data = result.data
-
   if (data && data.length) {
     const group = groupBy(data, 'category')
     forIn(group, (value: Array<Website>, key: string) => {

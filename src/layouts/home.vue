@@ -14,7 +14,11 @@ export default defineComponent({
 <template>
   <a-layout class="h-full">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible :style="{ overflow: 'auto', height: '100vh' }">
-      <div class="logo" />
+      <div class="logo text-center">
+        <a-typography-title :level="4" type="success" class="line-height-norma">
+          CRM 导航网
+        </a-typography-title>
+      </div>
       <SiderMenu />
     </a-layout-sider>
     <a-layout>
@@ -51,7 +55,6 @@ export default defineComponent({
 }
 
 .ant-layout .logo {
-  height: 32px;
   background: rgba(255, 255, 255, 0.3);
   margin: 16px;
 }

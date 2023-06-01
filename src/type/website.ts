@@ -15,6 +15,7 @@ interface WebsiteCategory {
   id: string
   name: string
   parentID: string
+  order: number
   children: WebsiteCategory[]
   createdAt: string
   updatedAt: string

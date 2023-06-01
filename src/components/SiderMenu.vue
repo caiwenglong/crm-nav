@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TagsOutlined } from '@ant-design/icons-vue'
-import { forEach, partition } from 'lodash-es'
+import { forEach, partition, sortBy } from 'lodash-es'
 import type { WebsiteCategory } from '~/type/website'
 import { useWebsiteStore } from '~/stores/storeWebsite'
 
@@ -11,10 +11,14 @@ const websiteStore = useWebsiteStore()
 const selectedKeys = ref<string[]>(['1'])
 const categoryList = reactive<WebsiteCategory[]>([])
 
+const router = useRouter()
+
 onMounted(async () => {
   await websiteStore.getWebsiteCategory()
-
-  const categoryGroup = partition(websiteStore.websiteCategories, (item: WebsiteCategory) => {
+  const sortedArr = sortBy(websiteStore.websiteCategories, (item: WebsiteCategory) => {
+    return item.order
+  })
+  const categoryGroup = partition(sortedArr, (item: WebsiteCategory) => {
     return item.parentID === '0'
   })
 
@@ -33,14 +37,13 @@ onMounted(async () => {
 })
 
 function handleMenuClick(e: any) {
-  const element = document.getElementById(e.key)
-  if (element) {
-    element.scrollIntoView({
-      behavior: 'smooth', // 定义过渡动画。其中一个auto或smooth。默认为auto.
-      block: 'start', // 定义垂直对齐。一start，center，end，或 nearest。默认为start.
-      inline: 'nearest', // 定义水平对齐方式。一start，center，end，或 nearest。默认为nearest.
-    })
-  }
+  const elementText = e.domEvent.target.innerText
+
+  if (elementText === '首页')
+    router.push('/')
+
+  else
+    router.push(`/category/${encodeURIComponent(e.key)}`)
 }
 </script>
 
@@ -50,12 +53,15 @@ function handleMenuClick(e: any) {
       <template v-if="category.children?.length">
         <a-sub-menu :id="category.id" :key="category.id">
           <template #icon>
-            <MailOutlined />
+            <TagsOutlined />
           </template>
           <template #title>
             {{ category.name }}
           </template>
           <a-menu-item v-for="subCategory in category.children" :key="subCategory.id">
+            <template #icon>
+              <TagsOutlined />
+            </template>
             {{ subCategory.name }}
           </a-menu-item>
         </a-sub-menu>
